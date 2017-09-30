@@ -1,0 +1,29 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: #03001b;
+  background: url('./images/background.jpg') no-repeat center center,
+    url('./images/stars.jpg');
+  background-size: contain, 250px;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body h1.title {
+  background: url('./images/text.png') no-repeat center center;
+  background-size: contain;
+  width: 100vw;
+  height: 80vh;
+
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
