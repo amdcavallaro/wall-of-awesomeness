@@ -1,3 +1,25 @@
+@keyframes rainbow {
+  0%,
+  100% {
+    color: #7ccdea;
+  }
+  16% {
+    color: #0074d9;
+  }
+  32% {
+    color: #2ecc40;
+  }
+  48% {
+    color: #ffdc00;
+  }
+  64% {
+    color: #b10dc9;
+  }
+  80% {
+    color: #ff4136;
+  }
+}
+
 .home__title {
   background: url('../../images/text.png') no-repeat center center;
   background-size: contain;
@@ -7,4 +29,21 @@
   text-indent: 100%;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.home__start {
+  font-family: 'VT323', monospace;
+  color: white;
+  font-size: 40px;
+  text-align: center;
+  margin: 0 auto;
+
+  display: block;
+
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.home__start:hover {
+  animation: rainbow 2s infinite;
 }
