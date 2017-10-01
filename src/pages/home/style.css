@@ -1,0 +1,10 @@
+.home__title {
+  background: url('../../images/text.png') no-repeat center center;
+  background-size: contain;
+  width: 100vw;
+  height: 80vh;
+
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
