@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { ButtonLink } from '../../components/button';
+
 import './style.css';
 
 class Home extends Component {
@@ -8,7 +10,7 @@ class Home extends Component {
       <div className="home">
         <h1 className="home__title">GDG Wall of Awesomeness</h1>
 
-        <a className="home__start">Start</a>
+        <ButtonLink to="/camera">Start</ButtonLink>
       </div>
     );
   }
