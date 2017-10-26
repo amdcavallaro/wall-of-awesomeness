@@ -2,6 +2,8 @@ import React from 'react';
 
 import { bool, func } from 'prop-types';
 
+import './style.css';
+
 /**
  * A component that shows a video feed from the
  * user's webcam if they give permissions.
@@ -26,8 +28,6 @@ class Camera extends React.Component {
       cameraError: false,
       hasCamera: false,
     };
-
-    this.countdownInterval = null;
   }
 
   componentDidMount() {
@@ -89,6 +89,7 @@ class Camera extends React.Component {
         <button onClick={this.takePicture}>Take selfie</button>
 
         <canvas
+          className="camera__canvas"
           ref={c => {
             this.canvas = c;
           }}
