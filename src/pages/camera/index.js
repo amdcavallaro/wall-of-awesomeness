@@ -9,6 +9,7 @@ import './style.css';
 class CameraPage extends Component {
   WAITING = 0;
   CAMERA_ENABLED = 1;
+  CAMERA_DISABLED = 2;
 
   constructor() {
     super();
@@ -29,12 +30,21 @@ class CameraPage extends Component {
       >
         Yes!
       </Button>,
-      <Button key="no">No</Button>,
+      <Button
+        onClick={() => this.setState({ currentStep: this.CAMERA_DISABLED })}
+        key="no"
+      >
+        No
+      </Button>,
     ];
   }
 
   renderCamera() {
     return <Camera enabled={true} />;
+  }
+
+  renderInput() {
+    return <Title>This is something not implemented yet.</Title>;
   }
 
   renderCurrentStep() {
@@ -44,6 +54,8 @@ class CameraPage extends Component {
         return this.renderWaiting();
       case this.CAMERA_ENABLED:
         return this.renderCamera();
+      case this.CAMERA_DISABLED:
+        return this.renderInput();
     }
   }
 
