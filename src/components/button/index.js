@@ -6,7 +6,13 @@ import './style.css';
 
 class Button extends React.Component {
   render() {
-    return <button className="button">{this.props.children}</button>;
+    const { children, ...props } = this.props;
+
+    return (
+      <button className="button" {...props}>
+        {children}
+      </button>
+    );
   }
 }
 
