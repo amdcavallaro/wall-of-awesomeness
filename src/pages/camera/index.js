@@ -17,6 +17,7 @@ class CameraPage extends Component {
 
     this.state = {
       currentStep: this.WAITING,
+      webcamEnabled: false,
     };
   }
 
@@ -27,6 +28,27 @@ class CameraPage extends Component {
     });
   };
 
+  handleFileChange = e => {
+    const fileList = Array.from(e.target.files).filter(f =>
+      f.type.match(/^image\//),
+    );
+
+    const file = fileList[0];
+
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      this.setState({
+        currentStep: this.PICTURE_TAKEN,
+        imageUrl: e.target.result,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
   renderWaiting() {
     return [
       <Title key="title">
@@ -34,12 +56,20 @@ class CameraPage extends Component {
       </Title>,
       <Button
         key="yes"
-        onClick={() => this.setState({ currentStep: this.CAMERA_ENABLED })}
+        onClick={() =>
+          this.setState({
+            currentStep: this.CAMERA_ENABLED,
+            webcamEnabled: true,
+          })}
       >
         Yes!
       </Button>,
       <Button
-        onClick={() => this.setState({ currentStep: this.CAMERA_DISABLED })}
+        onClick={() =>
+          this.setState({
+            currentStep: this.CAMERA_DISABLED,
+            webcamEnabled: false,
+          })}
         key="no"
       >
         No
@@ -52,7 +82,10 @@ class CameraPage extends Component {
   }
 
   renderInput() {
-    return <Title>This is something not implemented yet.</Title>;
+    return [
+      <Title>You can upload a picture here.</Title>,
+      <input type="file" accept="image/*" onChange={this.handleFileChange} />,
+    ];
   }
 
   renderPreview() {
@@ -67,7 +100,12 @@ class CameraPage extends Component {
         Yes!
       </Button>,
       <Button
-        onClick={() => this.setState({ currentStep: this.CAMERA_ENABLED })}
+        onClick={() =>
+          this.setState({
+            currentStep: this.state.webcamEnabled
+              ? this.CAMERA_ENABLED
+              : this.CAMERA_DISABLED,
+          })}
         key="no"
       >
         No, let's try again
