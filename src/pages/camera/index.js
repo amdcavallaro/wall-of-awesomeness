@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import uuid from 'uuid';
+
+import firebase from 'firebase';
+
 import Title from '../../components/title';
 import Button from '../../components/button';
 import Camera from '../../components/camera';
@@ -49,6 +53,27 @@ class CameraPage extends Component {
     reader.readAsDataURL(file);
   };
 
+  handleUploadPicture = () => {
+    const storageRef = firebase.storage().ref();
+
+    const id = uuid.v4();
+
+    fetch(this.state.imageUrl)
+      .then(b => b.blob())
+      .then(blob => {
+        storageRef
+          .child(`user-images/${id}.jpg`)
+          .put(blob)
+          .then(function(snapshot) {
+            alert('uploaded');
+          })
+          .catch(function(error) {
+            alert('fail', error);
+            console.error('Upload failed:', error);
+          });
+      });
+  };
+
   renderWaiting() {
     return [
       <Title key="title">
@@ -96,7 +121,7 @@ class CameraPage extends Component {
 
       <img src={this.state.imageUrl} alt="This should be you" />,
 
-      <Button key="yes" onClick={() => alert('todo')}>
+      <Button key="yes" onClick={this.handleUploadPicture}>
         Yes!
       </Button>,
       <Button
