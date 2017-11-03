@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import uuid from 'uuid';
+
+import firebase from 'firebase';
+
 import Title from '../../components/title';
 import Button from '../../components/button';
 import Camera from '../../components/camera';
@@ -11,6 +15,8 @@ class CameraPage extends Component {
   CAMERA_ENABLED = 1;
   CAMERA_DISABLED = 2;
   PICTURE_TAKEN = 3;
+  UPLOADING = 4;
+  UPLOADED = 5;
 
   constructor() {
     super();
@@ -18,6 +24,7 @@ class CameraPage extends Component {
     this.state = {
       currentStep: this.WAITING,
       webcamEnabled: false,
+      uploadProgress: 0,
     };
   }
 
@@ -25,6 +32,14 @@ class CameraPage extends Component {
     this.setState({
       imageUrl,
       currentStep: this.PICTURE_TAKEN,
+    });
+  };
+
+  handleReset = imageUrl => {
+    this.setState({
+      currentStep: this.WAITING,
+      webcamEnabled: false,
+      uploadProgress: 0,
     });
   };
 
@@ -47,6 +62,44 @@ class CameraPage extends Component {
       });
     };
     reader.readAsDataURL(file);
+  };
+
+  handleUploadPicture = () => {
+    const storageRef = firebase.storage().ref();
+
+    const id = uuid.v4();
+
+    this.setState({
+      currentStep: this.UPLOADING,
+    });
+
+    fetch(this.state.imageUrl)
+      .then(b => b.blob())
+      .then(blob => {
+        storageRef
+          .child(`user-images/${id}.jpg`)
+          .put(blob)
+          .on(
+            'state_changed',
+            snapshot => {
+              const progress =
+                snapshot.bytesTransferred / snapshot.totalBytes * 100;
+
+              this.setState({
+                uploadProgress: progress,
+              });
+            },
+            error => {
+              // Handle unsuccessful uploads
+              alert(error);
+            },
+            () => {
+              this.setState({
+                currentStep: this.UPLOADED,
+              });
+            },
+          );
+      });
   };
 
   renderWaiting() {
@@ -83,8 +136,13 @@ class CameraPage extends Component {
 
   renderInput() {
     return [
-      <Title>You can upload a picture here.</Title>,
-      <input type="file" accept="image/*" onChange={this.handleFileChange} />,
+      <Title key="title">You can upload a picture here.</Title>,
+      <input
+        key="input"
+        type="file"
+        accept="image/*"
+        onChange={this.handleFileChange}
+      />,
     ];
   }
 
@@ -94,9 +152,9 @@ class CameraPage extends Component {
         Wow, amazing one! Do you want to upload it to the wall?
       </Title>,
 
-      <img src={this.state.imageUrl} alt="This should be you" />,
+      <img key="image" src={this.state.imageUrl} alt="This should be you" />,
 
-      <Button key="yes" onClick={() => alert('todo')}>
+      <Button key="yes" onClick={this.handleUploadPicture}>
         Yes!
       </Button>,
       <Button
@@ -113,6 +171,23 @@ class CameraPage extends Component {
     ];
   }
 
+  renderUploading() {
+    return <Title>Uploading {Math.floor(this.state.uploadProgress)}%</Title>;
+  }
+
+  renderUploaded() {
+    return [
+      <Title key="title">
+        Perfect! The picture is going to be shown on the wall in a few moments!
+        Do you want to take another picture?
+      </Title>,
+
+      <Button key="yes" onClick={this.handleReset}>
+        Yes!
+      </Button>,
+    ];
+  }
+
   renderCurrentStep() {
     switch (this.state.currentStep) {
       case this.WAITING:
@@ -124,6 +199,10 @@ class CameraPage extends Component {
         return this.renderInput();
       case this.PICTURE_TAKEN:
         return this.renderPreview();
+      case this.UPLOADING:
+        return this.renderUploading();
+      case this.UPLOADED:
+        return this.renderUploaded();
     }
   }
 

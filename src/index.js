@@ -5,11 +5,15 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { BrowserRouter } from 'react-router-dom';
 
+import FirebaseProvider from './containers/firebase';
+
 import 'reset-css/reset.css';
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <FirebaseProvider>
+      <App />
+    </FirebaseProvider>
   </BrowserRouter>,
   document.getElementById('root'),
 );
