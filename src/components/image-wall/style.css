@@ -1,0 +1,10 @@
+.wall {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wall > * {
+  width: 100%;
+  max-width: 200px;
+}
