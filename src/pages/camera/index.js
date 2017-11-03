@@ -136,8 +136,13 @@ class CameraPage extends Component {
 
   renderInput() {
     return [
-      <Title>You can upload a picture here.</Title>,
-      <input type="file" accept="image/*" onChange={this.handleFileChange} />,
+      <Title key="title">You can upload a picture here.</Title>,
+      <input
+        key="input"
+        type="file"
+        accept="image/*"
+        onChange={this.handleFileChange}
+      />,
     ];
   }
 
@@ -147,7 +152,7 @@ class CameraPage extends Component {
         Wow, amazing one! Do you want to upload it to the wall?
       </Title>,
 
-      <img src={this.state.imageUrl} alt="This should be you" />,
+      <img key="image" src={this.state.imageUrl} alt="This should be you" />,
 
       <Button key="yes" onClick={this.handleUploadPicture}>
         Yes!
