@@ -8,25 +8,9 @@ class ImageWall extends React.Component {
   render() {
     return (
       <div className="wall">
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
-        <Image ratio={1} src="http://via.placeholder.com/350x150" alt="" />
+        {this.props.images.map(img => (
+          <Image key={img.url} ratio={1} src={img.url} alt="" />
+        ))}
       </div>
     );
   }
