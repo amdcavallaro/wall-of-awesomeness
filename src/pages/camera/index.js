@@ -107,26 +107,26 @@ class CameraPage extends Component {
       <Title key="title">
         Do you want to take a picture with your camera?
       </Title>,
-      <Button
-        key="yes"
-        onClick={() =>
-          this.setState({
-            currentStep: this.CAMERA_ENABLED,
-            webcamEnabled: true,
-          })}
-      >
-        Yes!
-      </Button>,
-      <Button
-        onClick={() =>
-          this.setState({
-            currentStep: this.CAMERA_DISABLED,
-            webcamEnabled: false,
-          })}
-        key="no"
-      >
-        No
-      </Button>,
+      <div className="camera__actions" key="actions">
+        <Button
+          onClick={() =>
+            this.setState({
+              currentStep: this.CAMERA_ENABLED,
+              webcamEnabled: true,
+            })}
+        >
+          Yes!
+        </Button>
+        <Button
+          onClick={() =>
+            this.setState({
+              currentStep: this.CAMERA_DISABLED,
+              webcamEnabled: false,
+            })}
+        >
+          No
+        </Button>
+      </div>,
     ];
   }
 
@@ -152,22 +152,23 @@ class CameraPage extends Component {
         Wow, amazing one! Do you want to upload it to the wall?
       </Title>,
 
-      <img key="image" src={this.state.imageUrl} alt="This should be you" />,
+      <div key="image">
+        <img src={this.state.imageUrl} alt="This should be you" />
+      </div>,
 
-      <Button key="yes" onClick={this.handleUploadPicture}>
-        Yes!
-      </Button>,
-      <Button
-        onClick={() =>
-          this.setState({
-            currentStep: this.state.webcamEnabled
-              ? this.CAMERA_ENABLED
-              : this.CAMERA_DISABLED,
-          })}
-        key="no"
-      >
-        No, let's try again
-      </Button>,
+      <div key="actions" className="camera__actions">
+        <Button onClick={this.handleUploadPicture}>Yes!</Button>
+        <Button
+          onClick={() =>
+            this.setState({
+              currentStep: this.state.webcamEnabled
+                ? this.CAMERA_ENABLED
+                : this.CAMERA_DISABLED,
+            })}
+        >
+          Retry
+        </Button>
+      </div>,
     ];
   }
 
@@ -182,9 +183,9 @@ class CameraPage extends Component {
         Do you want to take another picture?
       </Title>,
 
-      <Button key="yes" onClick={this.handleReset}>
-        Yes!
-      </Button>,
+      <div key="actions" className="camera__actions">
+        <Button onClick={this.handleReset}>Yes!</Button>
+      </div>,
     ];
   }
 

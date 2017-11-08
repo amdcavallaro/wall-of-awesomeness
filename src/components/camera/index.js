@@ -2,6 +2,8 @@ import React from 'react';
 
 import { bool, func } from 'prop-types';
 
+import Button from '../button';
+
 import './style.css';
 
 /**
@@ -78,7 +80,7 @@ class Camera extends React.Component {
 
   render() {
     return (
-      <div className="camera">
+      <div className="camera-feed">
         <video
           autoPlay
           ref={c => {
@@ -86,10 +88,10 @@ class Camera extends React.Component {
           }}
         />
 
-        <button onClick={this.takePicture}>Take selfie</button>
+        <Button onClick={this.takePicture}>Take selfie</Button>
 
         <canvas
-          className="camera__canvas"
+          className="camera-feed__canvas"
           ref={c => {
             this.canvas = c;
           }}
