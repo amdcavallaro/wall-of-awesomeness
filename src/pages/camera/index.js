@@ -7,6 +7,7 @@ import firebase from 'firebase';
 import Title from '../../components/title';
 import Button from '../../components/button';
 import Camera from '../../components/camera';
+import FileInput from '../../components/file-input';
 
 import './style.css';
 
@@ -137,12 +138,14 @@ class CameraPage extends Component {
   renderInput() {
     return [
       <Title key="title">You can upload a picture here.</Title>,
-      <input
+      <FileInput
         key="input"
         type="file"
         accept="image/*"
         onChange={this.handleFileChange}
-      />,
+      >
+        Press here to upload
+      </FileInput>,
     ];
   }
 
